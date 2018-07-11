@@ -1,0 +1,36 @@
+{
+  "name": "auto-ria-api",
+  "version": "0.1.0",
+  "description": "Proxy for auto-ria API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LadnovSasha/auto-ria-api.git"
+  },
+  "keywords": [
+    "auto-ria",
+    "proxy"
+  ],
+  "author": "oladnov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LadnovSasha/auto-ria-api/issues"
+  },
+  "homepage": "https://github.com/LadnovSasha/auto-ria-api#readme",
+  "dependencies": {
+    "debug": "^3.1.0",
+    "dotenv": "^6.0.0",
+    "koa": "^2.5.1",
+    "koa-router": "^7.4.0",
+    "redis": "^2.8.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
