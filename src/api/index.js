@@ -1,21 +1,26 @@
 const Router = require('koa-router');
 const dictionaries = require('./dictionaries');
+const { cache } = require('../middlewares');
+const router = new Router({ prefix: '/api'});
 
-const router = new Router();
-
-router.get('/api/categories', dictionaries.categories);
-router.get('/api/categories/:categoryId/bodystyles', dictionaries.bodystyles);
-router.get('/api/categories/:categoryId/bodystyles/_group', dictionaries.bodyGroups);
-router.get('/api/categories/:categoryId/brands', dictionaries.brands);
-router.get('/api/categories/:categoryId/brands/:brandId/models', dictionaries.models);
-router.get('/api/categories/:categoryId/brands/:brandId/models/_group', dictionaries.modelGroups);
-router.get('/api/states', dictionaries.states);
-router.get('/api/states/:stateId/cities', dictionaries.cities);
-router.get('/api/categories/:categoryId/gearboxes', dictionaries.gearboxes);
-router.get('/api/categories/:categoryId/driverTypes', dictionaries.driverTypes);
-router.get('/api/fuel', dictionaries.fuelTypes);
-router.get('/api/categories/:categoryId/options', dictionaries.autoOptions);
-router.get('/api/colors', dictionaries.colors);
-router.get('/api/manufacturer', dictionaries.manufacturer_country);
+router
+	.use(cache.getCached)
+	.get('/search', dictionaries.search)
+	.get('/info', dictionaries.info)
+	.get('/categories', dictionaries.categories)
+	.get('/categories/:categoryId/bodystyles', dictionaries.bodystyles)
+	.get('/categories/:categoryId/bodystyles/_group', dictionaries.bodyGroups)
+	.get('/categories/:categoryId/brands', dictionaries.brands)
+	.get('/categories/:categoryId/brands/:brandId/models', dictionaries.models)
+	.get('/categories/:categoryId/brands/:brandId/models/_group', dictionaries.modelGroups)
+	.get('/states', dictionaries.states)
+	.get('/states/:stateId/cities', dictionaries.cities)
+	.get('/categories/:categoryId/gearboxes', dictionaries.gearboxes)
+	.get('/categories/:categoryId/driverTypes', dictionaries.driverTypes)
+	.get('/fuel', dictionaries.fuelTypes)
+	.get('/categories/:categoryId/options', dictionaries.autoOptions)
+	.get('/colors', dictionaries.colors)
+	.get('/manufacturer', dictionaries.manufacturer_country)
+	.use(cache.saveToCache)
 
 module.exports = router;

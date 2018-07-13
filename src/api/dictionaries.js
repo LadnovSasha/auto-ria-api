@@ -1,6 +1,6 @@
 const request = require('./request');
 
-function parseUrl(path, captures) {
+function repaceCaptures(path, captures) {
 	if (!captures)
 		return path;
 
@@ -9,13 +9,17 @@ function parseUrl(path, captures) {
 }
 
 async function rawResponse(path, ctx, next) {
-	uri = parseUrl(path, ctx.captures);
-	const response = await request({ uri }, ctx);
+	let uri = repaceCaptures(path, ctx.captures);
+	const response = await request(uri, { qs: ctx.query });
 	ctx.body = response;
+
+	return next();
 }
 
 module.exports = {
 	states: async (...args) => await rawResponse('/states', ...args),
+	search: async (...args) => await rawResponse('/search', ...args),
+	info: async (...args) => await rawResponse('/info', ...args),
 	cities: async (...args) => await rawResponse('/states/:id/cities', ...args),
 	fuelTypes: async (...args) => await rawResponse('/type', ...args),
 	colors: async (...args) => await rawResponse('/colors', ...args),
